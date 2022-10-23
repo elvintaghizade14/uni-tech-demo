@@ -1,0 +1,118 @@
+version: '3.3'
+
+services:
+  redis:
+    container_name: unitech_redis
+    image: "redis:alpine"
+    ports:
+      - "6380:6379"
+    restart: always
+
+  db_identity:
+    container_name: unitech_identity_db
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: identity
+      POSTGRES_USER: identity
+      POSTGRES_PASSWORD: identity123
+
+  db_account:
+    container_name: unitech_account_db
+    image: postgres
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: account
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: account123
+
+  db_exchange:
+    container_name: unitech_exchange_db
+    image: postgres
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: exchange
+      POSTGRES_USER: exchange
+      POSTGRES_PASSWORD: exchange123
+
+  api-gateway:
+    container_name: unitech_api_gateway
+    image: unitech/api-gateway:1.0
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    build:
+      context: api-gateway
+      dockerfile: Dockerfile
+    network_mode: "host"
+
+  ms-identity:
+    container_name: unitech_ms_identity
+    image: unitech/ms-identity:1.0
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    build:
+      context: ms-identity
+      dockerfile: Dockerfile
+    depends_on:
+      - db_identity
+      - redis
+    network_mode: "host"
+
+  ms-account:
+    container_name: unitech_ms_account
+    image: unitech/ms-account:1.0
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+    build:
+      context: ms-account
+      dockerfile: Dockerfile
+    depends_on:
+      - db_account
+    network_mode: "host"
+
+  ms-exchange:
+    container_name: unitech_ms_exchange
+    image: unitech/ms-exchange:1.0
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+    build:
+      context: ms-exchange
+      dockerfile: Dockerfile
+    depends_on:
+      - db_exchange
+    network_mode: "host"
+
+#  zookeeper:
+#    container_name: unitech_zookeeper
+#    image: confluentinc/cp-zookeeper:latest
+#    ports:
+#      - "22181:2181"
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+
+#  kafka:
+#    container_name: unitech_kafka
+#    image: confluentinc/cp-kafka:latest
+#    ports:
+#      - "29092:29092"
+#    depends_on:
+#      - zookeeper
+
+#  kafdrop:
+#    container_name: unitech_kafdrop
+#    image: obsidiandynamics/kafdrop
+#    ports:
+#      - "9000:9000"
+#    expose:
+#      - 9000
+#    depends_on:
+#      - zookeeper
+#      - kafka

@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    ROOT: INFO
+    az.et.unitech: DEBUG
+    az.et.unitech.gateway: DEBUG
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ms-identity
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/identity/**
+          filters:
+            - StripPrefix=1
+        - id: ms-account
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/account/**
+          filters:
+            - StripPrefix=1
+        - id: ms-exchange
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/exchange/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+application:
+  cors:
+    allowedOrigins: "*"
+    allowedHeaders: "*"
+    allowedMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS

@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_create-transfers-table
+      author: Elvin Taghizade
+      changes:
+        - createTable:
+            tableName: transfers
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: sender_iban
+                  type: varchar(34)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver_iban
+                  type: varchar(34)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: numeric(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(3)
+                  defaultValueComputed: now()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP(3)
+                  defaultValueComputed: now()
+            remarks: This is transfers table to store users' transfer info.

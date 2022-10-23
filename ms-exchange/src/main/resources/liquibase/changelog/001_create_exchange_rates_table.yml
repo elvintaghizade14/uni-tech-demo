@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_create-exchange-rates-table
+      author: Elvin Taghizade
+      changes:
+        - createTable:
+            tableName: exchange_rates
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rate
+                  type: numeric(19,2)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(3)
+                  defaultValueComputed: now()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP(3)
+                  defaultValueComputed: now()
+            remarks: This is exchange-rate table to store rates from third party.

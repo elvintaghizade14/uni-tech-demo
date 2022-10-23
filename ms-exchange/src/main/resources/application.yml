@@ -1,0 +1,58 @@
+server:
+  port: 8083
+
+logging:
+  level:
+    ROOT: INFO
+    az.et.unitech.common: DEBUG
+    az.et.unitech.exchange: DEBUG
+
+spring:
+  application:
+    name: ms-exchange
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yaml
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5435/exchange
+    username: exchange
+    password: exchange123
+    hikari:
+      poolName: MsExchangeHikariPool
+      auto-commit: false
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.format_sql: true
+
+application:
+  client:
+    exchange-rates-api:
+      url: ${EXCHNAGE_RATES_API_URL:https://api.exchangerate.host/}
+
+  swagger:
+    enabled: true
+    base-package: "az.et.unitech.exchange.controller"
+    paths: "/.*"
+    apiInfo:
+      version: 1.0
+      title: "Ms-Exchange Rest API"
+      description: "Spring Boot REST API for Ms-Exchange"
+  security:
+    authentication:
+      jwt:
+        base64-secret: V2pOV2FHUnRSbmRaV0d4M1dWaEthbHBYZUd0YVYzaHdaRzFXZVdWWVRqVmpNMUpzWWxkR2QyTklUbXhaTTBwc1pFZDBiR1ZWUW10YVdGbHE=
+  filter:
+    logging:
+      skipped-urls: /actuator/health, /v2/api-docs/**, /v3/api-docs/**, /swagger-resources/**, /webjars/**, /favicon.ico
