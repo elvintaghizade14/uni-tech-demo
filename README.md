@@ -6,7 +6,7 @@
 <pre>
 Total test count:  152
 Used:
-    - Java 11
+    - Java 11, Gradle
     - Spring Boot -> Web, AOP, Security(JWT), Data JPA, Test, ArchTest, Validation
     - Spring Cloud Gateway
     - OpenFeign (for exchange rates service from `https://api.exchangerate.host/latest`
@@ -27,7 +27,11 @@ Used:
 - Spring Cloud Gateway
 
 ## Getting Started ##
-
+Open terminal and:
+- `git clone https://github.com/elvint14/uni-tech.git` - clone the project
+- `cd ./uni-tech` - cnange directory into the project
+- `chmod +x start.sh` - add permission to `start.sh` file to be able to run command inside it
+- `chmod +x gradlew`  - add permission to `gradlew` file to be able to clean and build
 - `./start.sh` - start app
 - `./stop.sh`  - stop app
 
