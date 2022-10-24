@@ -20,6 +20,13 @@ Used:
     - Slf4j
     - Sonarqube
     - Checkstyle
+    - Test user #1:     username(pin): `ABC1234`; password: `123456`
+    - Test user #2:     username(pin): `ALI1214`; password: `123456`
+    - Test account #1:  username(pin): `ABC1234`; iban: `AZ21NABZ00000000137010001944`; status: `ACTIVATED`
+    - Test account #2:  username(pin): `ABC1234`; iban: `AZ21NABZ00000000137010001945`; status: `DEACTIVATED`
+    - Test account #3:  username(pin): `ABC1234`; iban: `AZ21NABZ00000000137010001946`; status: `ACTIVATED`
+    - Test account #4:  username(pin): `ALI1234`; iban: `AZ21NABZ00000000137010001947`; status: `ACTIVATED`
+    - Test account #5:  username(pin): `ALI1234`; iban: `AZ21NABZ00000000137010001948`; status: `DEACTIVATED`
 </pre>
 
 ## API Gateway ##
